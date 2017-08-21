@@ -13,13 +13,10 @@ Source0:        https://rubygems.org/gems/%{gem_name}-%{version}.gem
 BuildRequires:  ruby(release)
 BuildRequires:  rubygems-devel
 BuildRequires:  ruby
-BuildRequires:  rubygem-rspec
-BuildRequires:  rubygem(eventmachine) >= 0.12.10
+BuildRequires:  rubygem(eventmachine)
 BuildRequires:  rubygem(rspec)
-#BuildRequires:  rubygem(bacon)
-#BuildRequires:  rubygem(em-spec)
 
-Requires:       rubygem(eventmachine) >= 0.12.10
+Requires:       rubygem(eventmachine)
 
 BuildArch:      noarch
 %if 0%{?fedora} <= 20 || 0%{?el7}
@@ -42,7 +39,11 @@ Documentation for %{name}.
 %prep
 gem unpack %{SOURCE0}
 
+%if 0%{?dlrn} > 0
+%setup -q -D -T -n  %{dlrn_nvr}
+%else
 %setup -q -D -T -n  %{gem_name}-%{version}
+%endif}
 
 gem spec %{SOURCE0} -l --ruby > %{gem_name}.gemspec
 
